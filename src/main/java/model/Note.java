@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonAutoDetect
 public class Note {
     private int ID;
-    @JsonProperty("Заголовок заметки")
+    @JsonProperty("Заголовок_заметки")
     private String titleNote;
-    @JsonProperty("Текст заметки")
+    @JsonProperty("Текст_заметки")
     private String bodyNote;
-    @JsonProperty("Дата создания/правки")
+    @JsonProperty("Дата_создания-правки")
     private String date;
 
     public Note() {
