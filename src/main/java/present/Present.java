@@ -1,31 +1,58 @@
 package present;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import model.Note;
 import util.Functions;
+import util.JParser;
 import view.TerminalDisplay;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Present {
     ObjectMapper mapper;
     TerminalDisplay display;
     Functions functions;
     List<Note> notes;
-    Scanner scanner = new Scanner(System.in);
+    //    Map<String, String> mapNotes;
+    Scanner scanner;
     Note note;
+    JParser<Note> parser;
 
     public Present() {
         this.display = new TerminalDisplay();
         this.functions = new Functions();
         this.mapper = new ObjectMapper();
         this.notes = new ArrayList<>();
+//        this.mapNotes = new HashMap<>();
         this.note = new Note();
+        this.parser = new JParser<>();
+        this.scanner = new Scanner(System.in);
     }
+
+//    public void test() throws IOException {
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            BufferedReader reader = new BufferedReader(new FileReader("note.json"));
+//            String line = reader.readLine();
+////            while (line != null) {
+////                System.out.println(line);
+////                line = reader.readLine();
+////            }
+//            reader.close();
+//            System.out.println(line);
+//            Gson gson = new Gson();
+//            note = gson.fromJson(line, Note.class);
+////            Note note = mapper.readValue(line, Note.class);
+//            System.out.println("DataInfo: " + note.getID() + " " + note.getTitleNote() + " " + note.getBodyNote());
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
 
     public void run() {
         display.displayTerminalMessage("Добро пожаловать в программу ЗАМЕТКИ");
@@ -56,6 +83,8 @@ public class Present {
             }
         }
 
+        notes = parser.readJson(String.valueOf(file));
+
         display.displayTerminalMenu();
         int menuItem = scanner.nextInt();
         switch (menuItem) {
@@ -70,14 +99,18 @@ public class Present {
                 break;
             case (2):
                 if (checkFileForEmpty(file)) {
-                    functions.read(getID());
-                }
+                    for (Note elem : notes) {
+                        System.out.println(elem);
+                    }
+                    display.displayTerminalMessage(functions.read(getID(), notes));
 
+                }
                 continuable();
                 break;
             case (3):
-                if (checkFileForEmpty(file)) {
-                    display.displayTerminalMessage(functions.readAll(file));
+//                display.displayTerminalMessage(String.valueOf(mapNotes));
+                for (int i = 0; i < notes.size(); i++) {
+                    display.displayTerminalMessage(String.valueOf(notes.get(i)));
                 }
                 continuable();
                 break;
@@ -90,7 +123,7 @@ public class Present {
                 break;
             case (5):
                 if (checkFileForEmpty(file)) {
-                    functions.delete(getID());
+                    display.displayTerminalMessage(functions.delete(getID(), notes, file));
                 }
 
                 continuable();
@@ -106,9 +139,8 @@ public class Present {
     }
 
     private String getID() {
-        Scanner scanner = new Scanner(System.in);
         display.displayTerminalMessage("Введите ID заметки");
-        return scanner.nextLine();
+        return scanner.next();
     }
 
     private void continuable() {

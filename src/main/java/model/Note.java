@@ -3,31 +3,28 @@ package model;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonAutoDetect
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Note {
-    private int ID;
-    @JsonProperty("Заголовок_заметки")
+    private String ID;
     private String titleNote;
-    @JsonProperty("Текст_заметки")
     private String bodyNote;
-    @JsonProperty("Дата_создания-правки")
     private String date;
 
     public Note() {
     }
 
-    public Note(int ID, String titleNote, String bodyNote, String date) {
+    public Note(String ID, String titleNote, String bodyNote, String date) {
         this.ID = ID;
         this.titleNote = titleNote;
         this.bodyNote = bodyNote;
         this.date = date;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
@@ -53,5 +50,15 @@ public class Note {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "ID='" + ID + '\'' +
+                ", titleNote='" + titleNote + '\'' +
+                ", bodyNote='" + bodyNote + '\'' +
+                ", date='" + date + '\'' +
+                '}';
     }
 }
