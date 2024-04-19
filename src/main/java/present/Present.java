@@ -61,18 +61,17 @@ public class Present {
         display.displayTerminalMenu();
         int menuItem = scanner.nextInt();
         switch (menuItem) {
-            case (1):
+            case (1) -> {
                 display.displayTerminalMessage("Введите заголовок заметки");
                 scanner.nextLine();
                 String titleNote = scanner.nextLine();
                 display.displayTerminalMessage("Введите заметку");
-
                 String bodyNote = scanner.nextLine();
                 notes.add(new Note(functions.generateRandomID(), titleNote, bodyNote, functions.getCurrentDate()));
                 functions.addData(file, notes);
                 continuable();
-                break;
-            case (2):
+            }
+            case (2) -> {
                 if (checkFileForEmpty(file)) {
                     for (Note elem : notes) {
                         System.out.println(elem);
@@ -80,14 +79,14 @@ public class Present {
                     display.displayTerminalMessage(functions.read(getID(), notes));
                 }
                 continuable();
-                break;
-            case (3):
-                if (checkFileForEmpty(file)){
+            }
+            case (3) -> {
+                if (checkFileForEmpty(file)) {
                     display.displayTerminalMessage(functions.readAll(notes));
                 }
                 continuable();
-                break;
-            case (4):
+            }
+            case (4) -> {
                 if (checkFileForEmpty(file)) {
                     String tempID = getID();
                     display.displayTerminalMessage("Введите новый текст заметки");
@@ -96,20 +95,21 @@ public class Present {
                     display.displayTerminalMessage(functions.edit(tempID, notes, tempNoteText, file));
                 }
                 continuable();
-                break;
-            case (5):
+            }
+            case (5) -> {
                 if (checkFileForEmpty(file)) {
                     display.displayTerminalMessage(functions.delete(getID(), notes, file));
                 }
                 continuable();
-                break;
-            case (6):
+            }
+            case (6) -> {
                 scanner.close();
                 System.exit(0);
-            default:
+            }
+            default -> {
                 display.displayTerminalMessage("Введена неверная команда");
                 continuable();
-                break;
+            }
         }
     }
 

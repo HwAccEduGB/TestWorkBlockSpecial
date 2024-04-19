@@ -32,8 +32,8 @@ public class Functions {
 
     public String readAll(List<Note> notes){
         String tempStr = "";
-        for (int i = 0; i < notes.size(); i++) {
-            tempStr += String.valueOf(notes.get(i));
+        for (Note note : notes) {
+            tempStr += String.valueOf(note);
             tempStr += "\n";
         }
         return tempStr;
