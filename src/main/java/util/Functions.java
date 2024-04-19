@@ -1,21 +1,11 @@
 package util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Note;
-import net.bytebuddy.description.method.MethodDescription;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -40,7 +30,26 @@ public class Functions {
         return "Данный ID не найден";
     }
 
-    public void edit(String id) {
+    public String readAll(List<Note> notes){
+        String tempStr = "";
+        for (int i = 0; i < notes.size(); i++) {
+            tempStr += String.valueOf(notes.get(i));
+            tempStr += "\n";
+        }
+        return tempStr;
+    }
+
+    public String edit(String id, List<Note> notes, String text, File file) {
+        Note note;
+        for (int i = 0; i < notes.size(); i++) {
+            if (notes.get(i).getID().equals(id)) {
+                note = notes.get(i);
+                note.setBodyNote(text);
+                addData(file, notes);
+                return "Заметка изменена";
+            }
+        }
+        return "Данный ID не найден";
     }
 
     public String delete(String id, List<Note> notes, File file) {

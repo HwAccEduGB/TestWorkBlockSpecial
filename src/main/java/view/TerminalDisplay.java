@@ -1,7 +1,5 @@
 package view;
 
-import model.Note;
-
 public class TerminalDisplay {
 
     public void displayTerminalMenu() {
@@ -15,8 +13,5 @@ public class TerminalDisplay {
 
     public void displayTerminalMessage(String message) {
         System.out.println(message);
-    }
-    public void displayTerminalMessage(Note note) {
-        System.out.println(note);
     }
 }
